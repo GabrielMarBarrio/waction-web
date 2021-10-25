@@ -1,11 +1,19 @@
 <template>
   <div>
+    Leyendo de la base de datos:
     <span v-for="(doc, index) in documents" v-bind:key="index"> 
-      {{doc.nombre}} 
-      {{doc.apellido}}
+      <p>
+        Usuario no. {{index + 1}}
+      </p>
+      <p>
+        Nombre: {{doc.nombre}} 
+      </p>
+      <p>
+        Apellido: {{doc.apellido}}
+      </p>
     </span>
     <button v-on:click="googlePopUp()">
-      
+      Autenticar con google
     </button>
   </div>
 </template>
@@ -26,8 +34,9 @@ export default {
   created: async function(){
     
     this.documents = await this.getDocuments()
-    //var userCodes = ['AAPL','BTC']
-    //this.actions = await this.getActions(userCodes)
+
+    var userCodes = ['AAPL','TSLA']
+    this.actions = await this.getActions(userCodes)
     
   },
 
@@ -57,8 +66,10 @@ export default {
       const credential = GoogleAuthProvider.credentialFromResult(result)
       const token = credential.accessToken
       const user = result.user
-      console.log(result.user)
+      console.log(user);
+      return user
     }
+    
   }
 }
 </script>
