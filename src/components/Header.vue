@@ -10,18 +10,14 @@
     <!-- MENU -->
     <nav id="menu">
       <ul>
+       
         <li>
-          <a href="/">Inicio</a>
+          <a v-on:click="goToWatchlist()">WatchList</a>
         </li>
         <li>
-          <a href="watchlist">WatchList</a>
+          <a v-on:click="goToDetalles()">Detalles</a>
         </li>
-        <li>
-          <a href="detalles">Detalles</a>
-        </li>
-        <li>
-          <a href="login">Iniciar Sesión</a>
-        </li>
+        
       </ul>
     </nav>
 
@@ -33,7 +29,31 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+
+  props: {
+    onWatchlist: {
+      type: Boolean,
+      default: false
+    },
+    onDetalles: {
+      type: Boolean,
+      default: false
+    } 
+  },
+
+  methods: {
+    goToWatchlist: function(){
+      if(!this.onWatchlist){
+        this.$router.push({name: "Watchlist"})
+      }
+    },
+    goToDetalles: function(){
+      if(!this.onDetalles){
+        this.$router.push({name: "Detalles"})
+      }
+    },
+  }
 }
 </script>
 

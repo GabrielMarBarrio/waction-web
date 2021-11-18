@@ -1,6 +1,8 @@
 <template>
   <div>
+    <Header :onDetalles="true"></Header>
     Enlistando informacion:
+    <!--
     <span v-for="(doc, index) in actions" v-bind:key="index">
       <p>
         Código bursátil: {{doc.symbol}}
@@ -19,6 +21,7 @@
       </p>
       <div></div>
     </span>
+    -->
 
   </div>
 </template>
@@ -27,6 +30,7 @@
 import { db } from '../db'
 import axios from 'axios'
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth"
+import Header from './Header.vue'
 
 export default {
   data () {
@@ -35,27 +39,17 @@ export default {
     }
   },
 
+  components: {
+    Header,
+  },
+
   created: async function(){
 
-    var userCodes = ['AAPL','TSLA']
-    this.actions = await this.getActions(userCodes)
 
   },
 
   methods: {
 
-    getActions: async function(userCodes){
-      var options = {
-        method: 'GET',
-        url: 'https://rest.yahoofinanceapi.com/v6/finance/quote',
-        params: {symbols: userCodes.join(',')},
-        headers: {
-          'x-api-key': 'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi'
-        }
-      }
-      const array = await axios.request(options)
-      return array.data.quoteResponse.result
-    },
 
   }
 }
