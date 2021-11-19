@@ -22,7 +22,7 @@ export default {
   },
 
   created: async function(){
-    
+
   },
 
   methods: {
@@ -43,7 +43,7 @@ export default {
       await this.$store.dispatch('login', info)
       this.$router.push({name: "Watchlist"})
     }
-    
+
   }
 }
 </script>

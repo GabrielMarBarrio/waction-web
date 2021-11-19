@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div id="logo">
       <img src="../assets/images/logo.png" class="app-logo" alt="Logotipo" />
-      
+
     </div>
 
     <nav id="menu">
@@ -84,7 +84,7 @@ export default {
     onDetalles: {
       type: Boolean,
       default: false
-    } 
+    }
   },
 
   methods: {
@@ -106,7 +106,7 @@ export default {
           url: 'https://yfapi.net/v6/finance/autocomplete',
           params: {query: `${inputValue}`, lang: 'en'},
           headers: {
-            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'U52qtUNftR4lQ6xFg4GOy4Hh41hCsSO43jzrf8OW'
+            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
           }
         }
         axios.request(options).then(function (response) {
@@ -127,6 +127,7 @@ export default {
       this.$router.push({name:"Index"})
     }
     
+
   }
 }
 </script>
