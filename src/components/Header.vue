@@ -18,7 +18,8 @@
             v-model="chosen"
             :list="simpleSuggestionList"
             :filter-by-query="false"
-            :max-suggestions="5">
+            :max-suggestions="5"
+            @suggestion-click="onSuggestClick">
           </vue-simple-suggest>
         </li>
         <li>
@@ -106,7 +107,7 @@ export default {
           url: 'https://yfapi.net/v6/finance/autocomplete',
           params: {query: `${inputValue}`, lang: 'en'},
           headers: {
-            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
+            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
           }
         }
         axios.request(options).then(function (response) {
@@ -125,7 +126,15 @@ export default {
       console.log("hola")
       this.$store.dispatch('logout')
       this.$router.push({name:"Index"})
-    }
+    },
+    onSuggestClick (suggest, e) {
+      this.$router.push({
+        name: "Detalles",
+        params: {
+          symbol: suggest
+        }
+      })
+    },
     
 
   }

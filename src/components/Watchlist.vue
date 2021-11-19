@@ -60,7 +60,7 @@ export default {
           symbols: userCodes.join(',')
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
         }
       }
       const array = await axios.request(options)
