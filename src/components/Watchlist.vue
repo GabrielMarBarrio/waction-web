@@ -2,7 +2,6 @@
   <div>
     <Header onWatchlist></Header>
     watchlist
-    {{this.user}}
     <div>
     Acciones:
     <span v-for="(action, index) in actionsInfo" v-bind:key="index"> 
@@ -56,7 +55,7 @@ export default {
         url: 'https://yfapi.net/v6/finance/quote',
         params: {symbols: userCodes.join(',')},
         headers: {
-          'x-api-key': 'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi'
+          'x-api-key':  /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'U52qtUNftR4lQ6xFg4GOy4Hh41hCsSO43jzrf8OW'
         }
       }
       const array = await axios.request(options)
