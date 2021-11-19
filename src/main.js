@@ -57,6 +57,10 @@ const store = new Vuex.Store({
 
       context.commit('setUser', user)
       
+    },
+    logout (context){
+      context.commit('setUser', {})
+
     }
   }
 })

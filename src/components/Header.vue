@@ -22,13 +22,19 @@
           </vue-simple-suggest>
         </li>
         <li>
-          <div id="profile-pic">
+          <div id="profile-pic" @click.prevent.stop="handleClick($event)">
             <img v-bind:src="user.photoURL" />
           </div>
         </li>
 
       </ul>
     </nav>
+    <vue-simple-context-menu
+      :elementId="'myUniqueId'"
+      :options="options"
+      :ref="'vueSimpleContextMenu'"
+      @option-clicked="optionClicked"
+    />
         
   <br>
 
@@ -43,17 +49,26 @@ import VueSimpleSuggest from 'vue-simple-suggest'
 import 'vue-simple-suggest/dist/styles.css' // Optional CSS
 import axios from 'axios'
 import { mapState } from 'vuex'
+import "vue-simple-context-menu/dist/vue-simple-context-menu.css";
+import VueSimpleContextMenu from "vue-simple-context-menu";
 
 export default {
   name: 'Header',
   components: {
-    VueSimpleSuggest
+    VueSimpleSuggest,
+    VueSimpleContextMenu
   },
 
   data() {
     return {
       chosen: '',
-      suggestions: []
+      suggestions: [],
+      options: [
+        {
+          name: 'Cerrar Sesion',
+          slug: 'cerrar-sesion',
+        }
+      ]
     }
   },
 
@@ -73,6 +88,7 @@ export default {
   },
 
   methods: {
+
     goToWatchlist: function(){
       if(!this.onWatchlist){
         this.$router.push({name: "Watchlist"})
@@ -102,6 +118,14 @@ export default {
         })
       })
     },
+    handleClick (event) {
+      this.$refs.vueSimpleContextMenu.showMenu(event)
+    },
+    optionClicked (event) {
+      console.log("hola")
+      this.$store.dispatch('logout')
+      this.$router.push({name:"Index"})
+    }
     
   }
 }
