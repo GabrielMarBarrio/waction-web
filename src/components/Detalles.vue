@@ -1,26 +1,16 @@
 <template>
 <div>
   <Header :onDetalles="true"></Header>
-  Enlistando informacion:
-
+  <h3>Detalles:</h3>
   <p>
-    Código bursátil: {{actionInfo[0].symbol}}
-    <br>
-    Nombre del activo: {{actionInfo[0].shortName}}
-    <br>
-    24hrs Change: {{actionInfo[0].regularMarketChangePercent}}%
-    <br>
-    Precio: {{actionInfo[0].regularMarketPrice}}$
-    <br>
-    Market Cap: {{actionInfo[0].marketCap}}$
-    <br>
-    Mínimo diario: {{actionInfo[0].regularMarketDayLow}}$
-    <br>
-    Maximo diario: {{actionInfo[0].regularMarketDayHigh}}$
+    {{actionInfo[0].symbol}} ({{actionInfo[0].shortName}})&nbsp&nbsp&nbsp&nbsp
+    [+/-]{{actionInfo[0].regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
+    @${{actionInfo[0].regularMarketPrice}}
+    MIN: ${{actionInfo[0].regularMarketDayLow}} MAX: ${{actionInfo[0].regularMarketDayHigh}}
+    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo[0].marketCap}} 
   </p>
-
-
-
+  <h3>Gráfica:</h3>
+  <img src="@/assets/images/chart.png" width="35%"/>
 </div>
 </template>
 
@@ -63,7 +53,7 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ 'u6XglktVTx63p2wNwp45U5RmDGMPkQEL6bTfKsNV'
         }
       }
       const array = await axios.request(options)

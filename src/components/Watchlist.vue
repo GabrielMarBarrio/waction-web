@@ -1,21 +1,14 @@
 <template>
 <div>
   <Header onWatchlist></Header>
-  watchlist
+  <h3>Watchlist</h3>
   <div>
-    Acciones:
+    <h4>Acciones:</h4>
     <span v-for="(action, index) in actionsInfo" v-bind:key="index">
-      <p>
-        Accion no. {{index + 1}}
-      </p>
-
-      <p @click="sendSymbol(action.symbol)">
-
-        Simbolo: {{action.symbol}}
-      </p>
-      <p>
-        Precio: {{action.ask}}
-      </p>
+      <button id="asset" @click="sendSymbol(action.symbol)">  
+          {{action.symbol}} ({{action.displayName}}): {{action.regularMarketPrice}} USD [{{action.regularMarketChangePercent}}]
+      </button>
+      <br>
     </span>
   </div>
 </div>
@@ -60,7 +53,7 @@ export default {
           symbols: userCodes.join(',')
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ 'u6XglktVTx63p2wNwp45U5RmDGMPkQEL6bTfKsNV'
         }
       }
       const array = await axios.request(options)

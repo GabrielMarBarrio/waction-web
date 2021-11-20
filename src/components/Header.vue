@@ -10,7 +10,7 @@
     <nav id="menu">
       <ul>
         <li>
-          <a v-on:click="goToWatchlist()">WatchList</a>
+          <a v-on:click="goToWatchlist()">Watchlist</a>
         </li>
 
         <li>
@@ -107,7 +107,7 @@ export default {
           url: 'https://yfapi.net/v6/finance/autocomplete',
           params: {query: `${inputValue}`, lang: 'en'},
           headers: {
-            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ 'u6XglktVTx63p2wNwp45U5RmDGMPkQEL6bTfKsNV'
           }
         }
         axios.request(options).then(function (response) {

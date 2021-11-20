@@ -1,11 +1,13 @@
 <template>
   <div>
-    <button v-on:click="checkUser()" :disabled="cargando">
-      Autenticar con google
+    <br><h1><i><b>Welcome to Waction</b></i></h1>
+    <img src="@/assets/images/logo.png" width="20%"/><br>
+    <button v-on:click="checkUser()" :disabled="cargando" id="asset">
+      Autentificar con Google
     </button>
-    <p v-if="cargando">
-      Cargando
-    </p>
+    <h2 v-if="cargando">
+      Cargando...
+    </h2>
   </div>
 </template>
 
