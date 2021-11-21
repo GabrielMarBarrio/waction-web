@@ -8,7 +8,7 @@
       <div v-bind:id=index>
         <img width="16" height="16" src=../assets/images/fav.png id="fav" @click="updateWatchList(action.symbol, index)"></img>
         <button @click="sendSymbol(action.symbol)">
-          {{index}} {{isFavorite[index]}} {{action.symbol}} ({{action.displayName}}): {{action.regularMarketPrice}} USD [{{action.regularMarketChangePercent}}]
+           {{action.symbol}} ({{action.displayName}}): {{action.regularMarketPrice}} USD [{{action.regularMarketChangePercent}}]
         </button>
         <br>
       </div>
@@ -47,8 +47,7 @@ export default {
   name: "Watchlist",
   data() {
     return {
-      actionsInfo: [],
-      isFavorite: [true, true, true, true, true, true, true]
+      actionsInfo: []
     }
   },
 
@@ -93,7 +92,6 @@ export default {
     updateWatchList: async function(action, indx) {
       this.user.actions.splice(this.user.actions.indexOf(action), 1),
         document.getElementById(indx).remove(),
-        this.isFavorite[indx] = false,
         await setDoc(doc(collection(db, "users"), this.user.uid), {
           actions: this.user.actions,
         }, {
