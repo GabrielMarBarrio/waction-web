@@ -1,16 +1,18 @@
 <template>
 <div>
   <Header :onDetalles="true"></Header>
+  <img v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
+  <img v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
   <h3>Detalles:</h3>
   <p>
     {{actionInfo[0].symbol}} ({{actionInfo[0].shortName}})&nbsp&nbsp&nbsp&nbsp
     [+/-]{{actionInfo[0].regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
     @${{actionInfo[0].regularMarketPrice}}
     MIN: ${{actionInfo[0].regularMarketDayLow}} MAX: ${{actionInfo[0].regularMarketDayHigh}}
-    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo[0].marketCap}} 
+    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo[0].marketCap}}
   </p>
   <h3>Gráfica:</h3>
-  <img src="@/assets/images/chart.png" width="35%"/>
+  <img src="@/assets/images/chart.png" width="35%" />
 </div>
 </template>
 
@@ -25,23 +27,43 @@ import {
   getAuth
 } from "firebase/auth"
 import Header from './Header.vue'
-
+import {
+  mapState
+} from 'vuex'
+import {
+  firestorePlugin
+} from 'vuefire'
+import {
+  collection,
+  getDoc,
+  query,
+  where,
+  setDoc,
+  doc
+} from "firebase/firestore";
 export default {
   data() {
     return {
       action: "",
-      actionInfo: []
+      actionInfo: [],
+      isFavorite: false
     }
   },
 
   components: {
     Header,
   },
+  computed: mapState([
+    'user'
+  ]),
+
 
   created: async function() {
     this.action = this.$route.params.symbol,
       this.getActions(this.action)
-
+    if (this.user.actions.includes(this.action)) {
+      this.isFavorite = true
+    }
   },
 
   methods: {
@@ -53,13 +75,32 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ 'u6XglktVTx63p2wNwp45U5RmDGMPkQEL6bTfKsNV'
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4*/ '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
         }
       }
       const array = await axios.request(options)
       this.actionInfo = array.data.quoteResponse.result
       console.log(this.actionInfo)
     },
+    updateWatchList: async function() {
+      if (!this.user.actions.includes(this.action)) {
+        this.isFavorite = true,
+          this.user.actions.push(this.action),
+          await setDoc(doc(collection(db, "users"), this.user.uid), {
+            actions: this.user.actions,
+          }, {
+            merge: true
+          })
+      } else {
+        this.isFavorite = false,
+          this.user.actions.splice(this.user.actions.indexOf(this.action), 1),
+          await setDoc(doc(collection(db, "users"), this.user.uid), {
+            actions: this.user.actions,
+          }, {
+            merge: true
+          })
+      }
+    }
   }
 }
 </script>

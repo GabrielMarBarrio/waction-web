@@ -36,7 +36,7 @@
       :ref="'vueSimpleContextMenu'"
       @option-clicked="optionClicked"
     />
-        
+
   <br>
 
     <!--LIMPIAR FLOTADOS-->
@@ -107,7 +107,7 @@ export default {
           url: 'https://yfapi.net/v6/finance/autocomplete',
           params: {query: `${inputValue}`, lang: 'en'},
           headers: {
-            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ 'u6XglktVTx63p2wNwp45U5RmDGMPkQEL6bTfKsNV'
+            'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4*/'6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
           }
         }
         axios.request(options).then(function (response) {
@@ -135,7 +135,7 @@ export default {
         }
       })
     },
-    
+
 
   }
 }

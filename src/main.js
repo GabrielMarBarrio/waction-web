@@ -38,7 +38,8 @@ const store = new Vuex.Store({
       user.email = `${info.email}`
       user.photoURL = `${info.photoURL}`
       user.accessToken = `${info.accessToken}`
-      
+      user.actions = `${info.actions}`
+
       await setDoc(doc(collection(db, "users"), `${user.uid}`), {
         name: `${user.name}`,
         email: `${user.email}`,
@@ -56,7 +57,7 @@ const store = new Vuex.Store({
       }
 
       context.commit('setUser', user)
-      
+
     },
     logout (context){
       context.commit('setUser', {})
