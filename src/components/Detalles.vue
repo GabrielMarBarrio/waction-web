@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Header :onDetalles="true"></Header>
+  <Header :onDetalles="true" @actualizarDetalles="refrescarDetalles"></Header>
   <img v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
   <img v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
   <h3>Detalles:</h3>
@@ -75,7 +75,7 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4*/ '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4*/ /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/
         }
       }
       const array = await axios.request(options)
@@ -99,6 +99,14 @@ export default {
           }, {
             merge: true
           })
+      }
+    },
+    refrescarDetalles(value){
+      this.action = value
+      this.isFavorite = false;
+      this.getActions(this.action)
+      if (this.user.actions.includes(this.action)) {
+        this.isFavorite = true
       }
     }
   }
