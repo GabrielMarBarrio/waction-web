@@ -7,7 +7,7 @@
     <span v-for="(action, index) in actionsInfo" v-bind:key="index">
       <div v-bind:id=index>
         <button class="button button2" @click="sendSymbol(action.symbol)">
-           <span style="color:#28bc2a">{{action.symbol}}</span> ({{action.displayName}}): {{action.regularMarketPrice}} USD [{{action.regularMarketChangePercent}}]
+           <span style="color:#42b983">{{action.symbol}}</span> ({{action.displayName}}): {{action.regularMarketPrice}} USD [{{action.regularMarketChangePercent}}]
         </button>
         <img width="25" src=../assets/images/fav.png id="fav" @click="updateWatchList(action.symbol, index)"></img>
         <br>
@@ -75,7 +75,7 @@ export default {
           symbols: userCodes.join(',')
         },
         headers: {
-          'x-api-key': 'AgksBarRAoZ6mNQ4TpLV2610QmIDnpJ5CbX6bZ6c'/*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /*'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /*     'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */ /*'6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' */
+          'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9'/*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /*'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /*     'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */ /*'6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' */
         }
       }
       const array = await axios.request(options)
@@ -106,10 +106,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: 90;
+  font-weight: 900;
 }
 h3{
-  color: #28bc2a;
+  color: #42b983;
   font-size: 40px;
 }
 h4{
@@ -121,11 +121,7 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-#kpd{
-  color: #28bc2a;
-  font-size: 16px;
-  font-weight: 900;
-}
+
 .button {
   background-color: white; /* Green */
   border: none;

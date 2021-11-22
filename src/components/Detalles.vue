@@ -1,18 +1,23 @@
 <template>
 <div>
   <Header :onDetalles="true" @actualizarDetalles="refrescarDetalles"></Header>
+  <button class="button button2" @click="goToWatchList()"> Regresar </button>
   <br>
-  <img width="50px" v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
-  <img width="50px" v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
-  <br><button @click="goToWatchList()"> <--- </button>
-  <h3>Detalles:</h3>
+  <br>
+  <br>
   <p>
-    {{actionInfo.symbol}} ({{actionInfo.shortName}})&nbsp&nbsp&nbsp&nbsp
-    [+/-]{{actionInfo.regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
-    @${{actionInfo.regularMarketPrice}}
-    MIN: ${{actionInfo.regularMarketDayLow}} MAX: ${{actionInfo.regularMarketDayHigh}}
-    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo.marketCap}}<br>
-    <p v-if="descriptionExist"> Description: {{description}} </p>
+    <h1>{{actionInfo.symbol}} ({{actionInfo.shortName}})&nbsp&nbsp&nbsp&nbsp</h1>
+    <img width="50px" v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
+    <img width="50px" v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
+    <br>
+    <h2>
+      [+/-]{{actionInfo.regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
+      @${{actionInfo.regularMarketPrice}}
+      MIN: ${{actionInfo.regularMarketDayLow}} MAX: ${{actionInfo.regularMarketDayHigh}}
+      &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo.marketCap}}
+    </h2>
+    <br>
+    <p v-if="descriptionExist"> <span style="font-weight:bolder">Description:</span> {{description}} </p>
   </p>
   <h3>Gráfica:</h3>
   <img src="@/assets/images/chart.png" width="35%" />
@@ -80,7 +85,7 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': 'AgksBarRAoZ6mNQ4TpLV2610QmIDnpJ5CbX6bZ6c' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
+          'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
         }
       }
       const array = await axios.request(options)
@@ -94,7 +99,7 @@ export default {
           modules: 'assetProfile'
         },
         headers: {
-          'x-api-key': 'AgksBarRAoZ6mNQ4TpLV2610QmIDnpJ5CbX6bZ6c' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
+          'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
         }
       }
       const array2 = await axios.request(options2)
@@ -143,11 +148,39 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
+.button {
+  background-color: #42b983; /* Green */
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 20px;
+  text-align: right;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  width: 200px;
+  font-weight:900;
+  align-items: baseline;
+  float:left;
 }
+.button2:hover {
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24),0 5px 5px 0 rgba(0,0,0,0.19);
+}
+h2{
+  color:#black;
+  font-weight: bolder;
+  font-size: 18px;
+}
+h1 {
+  color:#42b983;
+  font-weight: bolder;
+}
+p{
+  margin-left: 400px;
+  margin-right: 400px;
 
+}
 ul {
   list-style-type: none;
   padding: 0;

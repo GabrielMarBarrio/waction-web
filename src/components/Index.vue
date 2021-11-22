@@ -1,6 +1,6 @@
 <template>
   <div>
-    <br><h1><i><b>Welcome to Waction</b></i></h1>
+    <br><h1><i><b><span style="color:#42b983">W</span>elcome to <span style="color:#42b983">W</span>action</b></i></h1>
     <img src="@/assets/images/logo.png" width="20%"/><br>
     <button v-on:click="checkUser()" :disabled="cargando" id="asset">
       Autentificar con Google
@@ -52,10 +52,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+img{
+  filter: drop-shadow(5px 5px 10px #444);
+}
+h1{
+  font-size: 60px;
   font-weight: normal;
 }
-
+h2{
+  font-size: 30px;
+}
 ul {
   list-style-type: none;
   padding: 0;
