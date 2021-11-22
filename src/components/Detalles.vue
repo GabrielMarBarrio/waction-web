@@ -1,8 +1,9 @@
 <template>
 <div>
   <Header :onDetalles="true" @actualizarDetalles="refrescarDetalles"></Header>
-  <img v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
-  <img v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
+  <br>
+  <img width="50px" v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
+  <img width="50px" v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
   <br><button @click="goToWatchList()"> <--- </button>
   <h3>Detalles:</h3>
   <p>
@@ -79,7 +80,7 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': 'YIN21cD0L08ImY8riIqji3qliCHtOs5p8vMWaUJ7' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
+          'x-api-key': 'AgksBarRAoZ6mNQ4TpLV2610QmIDnpJ5CbX6bZ6c' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
         }
       }
       const array = await axios.request(options)
@@ -93,7 +94,7 @@ export default {
           modules: 'assetProfile'
         },
         headers: {
-          'x-api-key': 'YIN21cD0L08ImY8riIqji3qliCHtOs5p8vMWaUJ7' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
+          'x-api-key': 'AgksBarRAoZ6mNQ4TpLV2610QmIDnpJ5CbX6bZ6c' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
         }
       }
       const array2 = await axios.request(options2)
