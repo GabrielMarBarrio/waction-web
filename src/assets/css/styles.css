@@ -3,9 +3,8 @@ body {
     margin: 0px;
     padding: 0px;
 
-    background-color: #1F1F1F;
-
-    color: #ffffff;
+    background-color: #E6EDE8;
+    color: black;
 
     /*FUENTES*/
     font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -13,12 +12,11 @@ body {
     -moz-font-smoothing: antialiased;
     -moz-osx-font-smoothing: antialiased;
 }
-
 #header {
     height: 120px;
     width: 100%;
     background: #292929;
-    border-bottom: 2px solid #F29602;
+    border-bottom: 7px solid #28bc2a;
     /*border-top: 5px solid #61dafb;*/
 }
 
@@ -81,7 +79,7 @@ body {
 
 #asset:disabled {
     color:#7A7A7A;
-    background-color:#292929;    
+    background-color:#292929;
     border: 0.1em solid #333333;
 }
 
@@ -113,13 +111,15 @@ body {
 
 #menu a{
     text-decoration: none;
-    color: #FCA311;
+    color: #28bc2a;
     transition: 300ms all;
+    font-weight: 450;
 }
 
 
 #menu a:hover{
-    color: #ffffff;
+    color: #287A2A;
+    font-weight:900;
 }
 
 #slider{
@@ -146,10 +146,9 @@ body {
     padding-top: 130px;
     text-align: center;
 }
-
 .btn-white{
     display: block;
-    background: white;
+    background: black;
     color:rgb(88, 88, 88);
     padding: 10px;
     width: 200px;
