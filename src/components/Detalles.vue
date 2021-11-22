@@ -3,13 +3,15 @@
   <Header :onDetalles="true" @actualizarDetalles="refrescarDetalles"></Header>
   <img v-if="isFavorite" src=../assets/images/fav.png id="fav" @click="updateWatchList()"></img>
   <img v-if="!isFavorite" src=../assets/images/noFav.png id="fav" @click="updateWatchList()"></img>
+  <br><button @click="goToWatchList()"> <--- </button>
   <h3>Detalles:</h3>
   <p>
-    {{actionInfo[0].symbol}} ({{actionInfo[0].shortName}})&nbsp&nbsp&nbsp&nbsp
-    [+/-]{{actionInfo[0].regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
-    @${{actionInfo[0].regularMarketPrice}}
-    MIN: ${{actionInfo[0].regularMarketDayLow}} MAX: ${{actionInfo[0].regularMarketDayHigh}}
-    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo[0].marketCap}}
+    {{actionInfo[0][0].symbol}} ({{actionInfo[0][0].shortName}})&nbsp&nbsp&nbsp&nbsp
+    [+/-]{{actionInfo[0][0].regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
+    @${{actionInfo[0][0].regularMarketPrice}}
+    MIN: ${{actionInfo[0][0].regularMarketDayLow}} MAX: ${{actionInfo[0][0].regularMarketDayHigh}}
+    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo[0][0].marketCap}}<br>
+    Description: {{actionInfo[1][0].assetProfile.longBusinessSummary}}
   </p>
   <h3>Gráfica:</h3>
   <img src="@/assets/images/chart.png" width="35%" />
@@ -75,12 +77,26 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4*/ /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ 'Nxsrr9ch5zLkI6PiE30B4mrLpYo0bw23hjUVzcx0' /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/
         }
       }
       const array = await axios.request(options)
-      this.actionInfo = array.data.quoteResponse.result
-      console.log(this.actionInfo)
+      this.actionInfo.push(array.data.quoteResponse.result)
+
+      var ex = 'https://yfapi.net/v11/finance/quoteSummary/'+symbo
+      var options2 = {
+        method: 'GET',
+        url: ex,
+        params: {
+          modules: 'assetProfile'
+        },
+        headers: {
+          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ 'Nxsrr9ch5zLkI6PiE30B4mrLpYo0bw23hjUVzcx0' /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/
+        }
+      }
+      const array2 = await axios.request(options2)
+      console.log(array2)
+      this.actionInfo.push(array2.data.quoteSummary.result)
     },
     updateWatchList: async function() {
       if (!this.user.actions.includes(this.action)) {
@@ -108,6 +124,9 @@ export default {
       if (this.user.actions.includes(this.action)) {
         this.isFavorite = true
       }
+    },
+    goToWatchList(){
+      this.$router.push({name: "Watchlist"})
     }
   }
 }
