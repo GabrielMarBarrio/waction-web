@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="user.hasOwnProperty('uid')">
   <Header onWatchlist></Header>
   <h3>Watchlist</h3>
   <div>
@@ -14,6 +14,9 @@
       </div>
     </span>
   </div>
+</div>
+<div v-else>
+  <h3>Error: missing user!</h3>
 </div>
 </template>
 
@@ -75,7 +78,24 @@ export default {
           symbols: userCodes.join(',')
         },
         headers: {
-          'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9'/*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /*'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /*     'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3' */ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */ /*'6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' */
+          //'x-api-key': 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi'
+          //'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9'
+          //'x-api-key': 'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi'
+          //'x-api-key': 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+          //'x-api-key': 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
+          //'x-api-key': 'Nxsrr9ch5zLkI6PiE30B4mrLpYo0bw23hjUVzcx0'
+          //'x-api-key': '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
+          //'x-api-key': 'UCSWF5lqXM2I7XN2UQnen8xZoZBMGmiD2hpGQNjW'
+          //'x-api-key': 'G7rpWE6Hgm9RoDVvpw7Ao1lltasytUwi2PqbWVoC'
+          //'x-api-key': 'rSs9TdadZz76hpFFBbm5L5UDJON3Ik6q1E0OUzgc'
+          //'x-api-key': 'o7GjnLFmjw27tf4pr1YTB8oZ7hgKwJXh5Cucz6YT'
+          //'x-api-key': 'GmE2pcNBU37R51H4s5vyl9guZapLKIem5xK4YALa'
+          //'x-api-key': 'Yrr5r3YNmugU8ZiGoDvy2DS57KB6JNF6h3u7tB26'
+          'x-api-key': 'SlIlTS3UHr9ee9E1IknX588gIwIvdoUk1D0Kk2Nq'
+          //'x-api-key': 'aA0X2RMHCV4Nrox2js0GG17b6WB8zTcv5mDab1iS'
+          //'x-api-key': '5iqrHeCZwftPeEFZVaTU9jFNobVzko66EM9BW7Hh'
+          //'x-api-key': 'hRHIuVjOzp1FHnYKpxxu77pcQuQ6hEiqBxPsn070'
+          //'x-api-key': 'D4dX495PNi4a9e4AlTFPAaCKkj11sqSO44I44VSF'
         }
       }
       const array = await axios.request(options)

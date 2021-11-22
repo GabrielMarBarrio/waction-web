@@ -13,10 +13,16 @@ import { GoogleAuthProvider } from "firebase/auth"
 import { db } from './db'
 import { collection, getDoc, query, where, setDoc, doc } from "firebase/firestore";
 
+import VueApexCharts from 'vue-apexcharts'
+import '@/plugins/apexcharts'
+
 Vue.config.productionTip = false;
 Vue.use(firestorePlugin);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 const store = new Vuex.Store({
   state: {
@@ -38,23 +44,28 @@ const store = new Vuex.Store({
       user.email = `${info.email}`
       user.photoURL = `${info.photoURL}`
       user.accessToken = `${info.accessToken}`
-      user.actions = `${info.actions}`
-
-      await setDoc(doc(collection(db, "users"), `${user.uid}`), {
-        name: `${user.name}`,
-        email: `${user.email}`,
-        photoURL: `${user.photoURL}`,
-        accessToken: `${user.accessToken}`
-      }, {merge:true})
+      //user.actions = `${info.actions}`
 
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        user.actions = docSnap.data().actions
+        if(typeof(docSnap.data().actions) === "string") {
+          user.actions = docSnap.data().actions.split(',')
+        } else {
+          user.actions = docSnap.data().actions
+        }
       } else {
-        console.log("No such document!");
+        user.actions = []
       }
+
+      await setDoc(doc(collection(db, "users"), `${user.uid}`), {
+        name: `${user.name}`,
+        email: `${user.email}`,
+        photoURL: `${user.photoURL}`,
+        accessToken: `${user.accessToken}`,
+        actions: `${user.actions}`
+      }, {merge:true})
 
       context.commit('setUser', user)
 

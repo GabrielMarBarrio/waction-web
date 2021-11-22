@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="user.hasOwnProperty('uid')">
   <Header :onDetalles="true" @actualizarDetalles="refrescarDetalles"></Header>
   <button class="button button2" @click="goToWatchList()"> Regresar </button>
   <br>
@@ -20,7 +20,12 @@
     <p v-if="descriptionExist"> <span style="font-weight:bolder">Description:</span> {{description}} </p>
   </p>
   <h3>Gráfica:</h3>
-  <img src="@/assets/images/chart.png" width="35%" />
+  <div id="chart">
+    <apexchart type="candlestick" height="350" :options="chartOptions" :series="series"></apexchart>
+  </div>
+</div>
+<div v-else>
+  <h3>Error: missing user!</h3>
 </div>
 </template>
 
@@ -49,6 +54,9 @@ import {
   setDoc,
   doc
 } from "firebase/firestore";
+
+import VueApexCharts from 'vue-apexcharts'
+
 export default {
   data() {
     return {
@@ -56,7 +64,28 @@ export default {
       actionInfo: [],
       description: "",
       descriptionExist: true,
-      isFavorite: false
+      isFavorite: false,
+      series: [{
+        data: [] 
+      }],
+      chartOptions: {
+        chart: {
+          type: 'candlestick',
+          height: 350
+        },
+        title: {
+          text: '',
+          align: 'left'
+        },
+        xaxis: {
+          type: 'datetime'
+        },
+        yaxis: {
+          tooltip: {
+            enabled: true
+          }
+        }
+      }       
     }
   },
 
@@ -67,16 +96,74 @@ export default {
     'user'
   ]),
 
-
   created: async function() {
     this.action = this.$route.params.symbol,
       this.getActions(this.action)
     if (this.user.actions.includes(this.action)) {
       this.isFavorite = true
     }
+    await this.getSeries(this.action)
+    //console.log(this.series)
+
   },
 
   methods: {
+    getSeries: async function(symbo) {
+      var options = {
+        method: 'GET',
+        url: "https://yfapi.net/v8/finance/chart/" + symbo + "?comparisons=MSFT&range=1mo&region=US&interval=1d&lang=en&events=div%2Csplit",
+        params: {
+          symbols: symbo
+        },
+        headers: {
+          //'x-api-key': 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi'
+          //'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9'
+          //'x-api-key': 'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi'
+          //'x-api-key': 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+          //'x-api-key': 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
+          //'x-api-key': 'Nxsrr9ch5zLkI6PiE30B4mrLpYo0bw23hjUVzcx0'
+          //'x-api-key': '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
+          //'x-api-key': 'UCSWF5lqXM2I7XN2UQnen8xZoZBMGmiD2hpGQNjW'
+          //'x-api-key': 'G7rpWE6Hgm9RoDVvpw7Ao1lltasytUwi2PqbWVoC'
+          //'x-api-key': 'rSs9TdadZz76hpFFBbm5L5UDJON3Ik6q1E0OUzgc'
+          //'x-api-key': 'o7GjnLFmjw27tf4pr1YTB8oZ7hgKwJXh5Cucz6YT'
+          //'x-api-key': 'GmE2pcNBU37R51H4s5vyl9guZapLKIem5xK4YALa'
+          //'x-api-key': 'Yrr5r3YNmugU8ZiGoDvy2DS57KB6JNF6h3u7tB26'
+          //'x-api-key': 'SlIlTS3UHr9ee9E1IknX588gIwIvdoUk1D0Kk2Nq'
+          //'x-api-key': 'aA0X2RMHCV4Nrox2js0GG17b6WB8zTcv5mDab1iS'
+          'x-api-key': '5iqrHeCZwftPeEFZVaTU9jFNobVzko66EM9BW7Hh'
+          //'x-api-key': 'hRHIuVjOzp1FHnYKpxxu77pcQuQ6hEiqBxPsn070'
+          //'x-api-key': 'D4dX495PNi4a9e4AlTFPAaCKkj11sqSO44I44VSF'
+        }
+      }
+      const array = await axios.request(options)
+      var data = JSON.stringify(array)
+      data = JSON.parse(data)
+
+      //console.log(data.data.chart.result[0])
+      //console.log("arrlen: " + arrlen)
+      
+      let arrlen = data.data.chart.result[0].timestamp.length
+
+      let dummydata = []
+
+      for(let i = 0; i < arrlen; i++) {
+        dummydata[i] = {
+          x: new Date(data.data.chart.result[0].timestamp[i]),
+          y: [data.data.chart.result[0].indicators.quote[0].open[i],
+              data.data.chart.result[0].indicators.quote[0].high[i],
+              data.data.chart.result[0].indicators.quote[0].low[i],
+              data.data.chart.result[0].indicators.quote[0].close[i] ]         
+        }
+      }
+
+      this.$set(this.series[0], 'data', dummydata)
+      //this.series[0].data = dummydata
+
+      console.log("This series: \n")
+      console.log(this.series)
+    },    
+
     getActions: async function(symbo) {
       var options = {
         method: 'GET',
@@ -85,7 +172,24 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
+          //'x-api-key': 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi'
+          //'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9'
+          //'x-api-key': 'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi'
+          //'x-api-key': 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+          //'x-api-key': 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
+          //'x-api-key': 'Nxsrr9ch5zLkI6PiE30B4mrLpYo0bw23hjUVzcx0'
+          //'x-api-key': '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
+          //'x-api-key': 'UCSWF5lqXM2I7XN2UQnen8xZoZBMGmiD2hpGQNjW'
+          //'x-api-key': 'G7rpWE6Hgm9RoDVvpw7Ao1lltasytUwi2PqbWVoC'
+          //'x-api-key': 'rSs9TdadZz76hpFFBbm5L5UDJON3Ik6q1E0OUzgc'
+          //'x-api-key': 'o7GjnLFmjw27tf4pr1YTB8oZ7hgKwJXh5Cucz6YT'
+          //'x-api-key': 'GmE2pcNBU37R51H4s5vyl9guZapLKIem5xK4YALa'
+          //'x-api-key': 'Yrr5r3YNmugU8ZiGoDvy2DS57KB6JNF6h3u7tB26'
+          //'x-api-key': 'SlIlTS3UHr9ee9E1IknX588gIwIvdoUk1D0Kk2Nq'
+          //'x-api-key': 'aA0X2RMHCV4Nrox2js0GG17b6WB8zTcv5mDab1iS'
+          //'x-api-key': '5iqrHeCZwftPeEFZVaTU9jFNobVzko66EM9BW7Hh'
+          'x-api-key': 'hRHIuVjOzp1FHnYKpxxu77pcQuQ6hEiqBxPsn070'
+          //'x-api-key': 'D4dX495PNi4a9e4AlTFPAaCKkj11sqSO44I44VSF'
         }
       }
       const array = await axios.request(options)
@@ -99,7 +203,24 @@ export default {
           modules: 'assetProfile'
         },
         headers: {
-          'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
+          //'x-api-key': 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi'
+          //'x-api-key': '54dcfF0kfO9N10vcrzKGckVQMVAMyVF7PINjpWk9'
+          //'x-api-key': 'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi'
+          //'x-api-key': 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'
+          //'x-api-key': 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'
+          //'x-api-key': 'Nxsrr9ch5zLkI6PiE30B4mrLpYo0bw23hjUVzcx0'
+          //'x-api-key': '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'
+          //'x-api-key': 'UCSWF5lqXM2I7XN2UQnen8xZoZBMGmiD2hpGQNjW'
+          //'x-api-key': 'G7rpWE6Hgm9RoDVvpw7Ao1lltasytUwi2PqbWVoC'
+          //'x-api-key': 'rSs9TdadZz76hpFFBbm5L5UDJON3Ik6q1E0OUzgc'
+          //'x-api-key': 'o7GjnLFmjw27tf4pr1YTB8oZ7hgKwJXh5Cucz6YT'
+          //'x-api-key': 'GmE2pcNBU37R51H4s5vyl9guZapLKIem5xK4YALa'
+          //'x-api-key': 'Yrr5r3YNmugU8ZiGoDvy2DS57KB6JNF6h3u7tB26'
+          //'x-api-key': 'SlIlTS3UHr9ee9E1IknX588gIwIvdoUk1D0Kk2Nq'
+          //'x-api-key': 'aA0X2RMHCV4Nrox2js0GG17b6WB8zTcv5mDab1iS'
+          //'x-api-key': '5iqrHeCZwftPeEFZVaTU9jFNobVzko66EM9BW7Hh'
+          //'x-api-key': 'hRHIuVjOzp1FHnYKpxxu77pcQuQ6hEiqBxPsn070'
+          'x-api-key': 'D4dX495PNi4a9e4AlTFPAaCKkj11sqSO44I44VSF'
         }
       }
       const array2 = await axios.request(options2)
@@ -138,6 +259,7 @@ export default {
       if (this.user.actions.includes(this.action)) {
         this.isFavorite = true
       }
+      this.getSeries(this.action)
     },
     goToWatchList(){
       this.$router.push({name: "Watchlist"})

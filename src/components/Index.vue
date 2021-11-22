@@ -1,7 +1,7 @@
 <template>
   <div>
-    <br><h1><i><b><span style="color:#42b983">W</span>elcome to <span style="color:#42b983">W</span>action</b></i></h1>
-    <img src="@/assets/images/logo.png" width="20%"/><br>
+    <br><br><h1><i><b><span style="color:#42b983">W</span>elcome to <span style="color:#42b983">W</span>action</b></i></h1>
+    <img src="@/assets/images/logo.png" width="36%"/><br><br>
     <button v-on:click="checkUser()" :disabled="cargando" id="asset">
       Autentificar con Google
     </button>
