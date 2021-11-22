@@ -6,12 +6,12 @@
   <br><button @click="goToWatchList()"> <--- </button>
   <h3>Detalles:</h3>
   <p>
-    {{actionInfo[0][0].symbol}} ({{actionInfo[0][0].shortName}})&nbsp&nbsp&nbsp&nbsp
-    [+/-]{{actionInfo[0][0].regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
-    @${{actionInfo[0][0].regularMarketPrice}}
-    MIN: ${{actionInfo[0][0].regularMarketDayLow}} MAX: ${{actionInfo[0][0].regularMarketDayHigh}}
-    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo[0][0].marketCap}}<br>
-    Description: {{actionInfo[1][0].assetProfile.longBusinessSummary}}
+    {{actionInfo.symbol}} ({{actionInfo.shortName}})&nbsp&nbsp&nbsp&nbsp
+    [+/-]{{actionInfo.regularMarketChangePercent}}%&nbsp&nbsp&nbsp&nbsp
+    @${{actionInfo.regularMarketPrice}}
+    MIN: ${{actionInfo.regularMarketDayLow}} MAX: ${{actionInfo.regularMarketDayHigh}}
+    &nbsp&nbsp&nbsp&nbspCAP: ${{actionInfo.marketCap}}<br>
+    <p v-if="descriptionExist"> Description: {{description}} </p>
   </p>
   <h3>Gráfica:</h3>
   <img src="@/assets/images/chart.png" width="35%" />
@@ -48,6 +48,8 @@ export default {
     return {
       action: "",
       actionInfo: [],
+      description: "",
+      descriptionExist: true,
       isFavorite: false
     }
   },
@@ -77,11 +79,11 @@ export default {
           symbols: symbo
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/
+          'x-api-key': 'YIN21cD0L08ImY8riIqji3qliCHtOs5p8vMWaUJ7' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
         }
       }
       const array = await axios.request(options)
-      this.actionInfo.push(array.data.quoteResponse.result)
+      this.actionInfo = array.data.quoteResponse.result[0]
 
       var ex = 'https://yfapi.net/v11/finance/quoteSummary/'+symbo
       var options2 = {
@@ -91,12 +93,18 @@ export default {
           modules: 'assetProfile'
         },
         headers: {
-          'x-api-key': /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/
+          'x-api-key': 'YIN21cD0L08ImY8riIqji3qliCHtOs5p8vMWaUJ7' /*'HiM52JbWwbaeAZkIE8Hhm4gsVEuwpMpf6GH938Vi' */ /* 'PuVH8SoMIv8bs36EjW8s2aDlXXATRXXX4r4uNCJ3'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz'*/ /* 'ZV9PsSTYb02VX78B6t87saQCLLrAVTW15uBrKfRi' /* /* '6FRpNzPo591vXM5ri8Zgq1B3PDpOuYpTqgNAT7T4'*/ /* 'yJr0Oo6vNO5K6LwQRB3ww2oByOQS1uji4d5HVBDz' */
         }
       }
       const array2 = await axios.request(options2)
-      console.log(array2)
-      this.actionInfo.push(array2.data.quoteSummary.result)
+      try {
+        this.description = array2.data.quoteSummary.result[0].assetProfile.longBusinessSummary
+        this.descriptionExist = true
+      }
+      catch (e) {
+          this.descriptionExist = false
+      }
+
     },
     updateWatchList: async function() {
       if (!this.user.actions.includes(this.action)) {
